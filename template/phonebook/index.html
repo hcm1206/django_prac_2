@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block title %}phonebook{% endblock %}
+{% block content %}
+    <h3 class="text-center">
+        전화번호부 메인페이지
+    </h3>
+    <table class="table table-bordered border-primary w-75" align="center">
+        <tr align="center">
+            <th>아이디</th>
+            <th>이름</th>
+            <th>전화번호</th>
+        </tr>
+    {% for values in phonebook %}
+        <tr align="center">
+            <td>{{values.id}}</td><td><a href="{% url 'PB:D' values.id %}">{{ values.이름 }}</a></td><td>{{ values.전화번호 }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <div class="d-flex justify-content-center">
+        {% if user.is_active %}
+            <button onclick="addPage()" style="width:120px;" class="btn btn-success btn-lg">추가</button>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function addPage() {
+            document.location.href = "{% url 'PB:A' %}";
+            // document.location.herf = "/phonebook/add";
+        }
+        function homePage() {
+            document.location.href = "/";
+            // document.location.herf = "/phonebook/add";
+        }
+    </script>
+{% endblock %}

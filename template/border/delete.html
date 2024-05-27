@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+{% block title %}삭제 페이지{% endblock %}
+{% block script %}
+    <script>
+        alert('{{borderId}}번 게시글을 삭제했습니다.')
+        location.href= '/border/page/1';
+    </script>
+{% endblock %}
+{% block content %}
+    border delete 페이지 입니다.<br>
+    {{borderId}}번 삭제되었습니다.
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% block title %}phonebook{% endblock %}
+{% block content %}
+    <h3 class="text-center">전화번호 추가 페이지</h3>
+    <form method="POST">{% csrf_token %}
+        <table class="table table-bordered border-primary w-75 p-3" align="center">
+            <tr>
+                <th style="text-align: right;">이름</th>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <th style="text-align: right;">전화번호</th>
+                <td><input type="text" name="telnum"></td>
+            </tr>
+            <tr>
+                <th style="text-align: right;">이메일</th>
+                <td><input type="email", name="email"></td>
+            </tr>
+            <tr>
+                <th style="text-align: right;">주소</th>
+                <td><input type="text", name="address"></td>
+            </tr>
+            <tr>
+                <th style="text-align: right;">생년월일</th>
+                <td><input type="date", name="birth"></td>
+            </tr>
+            <tr align="center">
+                <td colspan="2">
+                    <input type="submit" value="저장" class="btn btn-success btn-lg">
+                    <input type="reset" value="다시 입력" class="btn btn-danger btn-lg">
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

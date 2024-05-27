@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+{% block title %}phonebook{% endblock %}
+{% block content %}
+    <h3 class="text-center">전화번호부 상세 페이지</h3>
+    <table class="table table-bordered border-primary text-center" style="width:60%;" align="center">
+        <tr>
+            <th>이름</th>
+            <td>{{userInfo.이름}}</td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td>{{userInfo.전화번호}}</td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td>{{userInfo.이메일}}</td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td>{{userInfo.주소}}</td>
+        </tr>
+        <tr>
+            <th>생년월일</th>
+            <td>{{userInfo.생년월일}}</td>
+        </tr>
+    </table>
+    <div class="justify-content-center d-flex">
+        <button class="btn btn-primary btn-lg mx-2" style="width:120px;" onclick="changeLocation('index')">목록으로</button>
+        {% if user.username == userInfo.작성자 %}
+            <button class="btn btn-success btn-lg mx-2" style="width:120px;" onclick="changeLocation('modify')">수정</button>
+            <button class="btn btn-danger btn-lg mx-2" style="width:120px;" onclick="changeLocation('delete')">삭제</button>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function changeLocation(locale) {
+            if (locale == 'index') {
+                location.href = '/phonebook/index/';
+            }
+            else if (locale == 'modify') {
+                location.href = '/phonebook/update/{{userInfo.id}}';
+            }
+            else if (locale == 'delete') {
+                location.href = '/phonebook/delete/{{userInfo.id}}';
+            }
+        }
+    </script>
+{% endblock %}

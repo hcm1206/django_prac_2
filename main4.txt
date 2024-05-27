@@ -1,0 +1,26 @@
+Sub App 생성
+- python manage.py startapp [앱이름]
+
+Sub App 프로젝트에 등록
+- settings.py
+- 41번 라인 INSTALLED_APP = ['앱이름']
+- App 등록은 App을 생성한 후에 등록해야 한다. 안 그러면 에러 발생
+
+Model 생성
+- models.py에서 클래스로 생성
+- Field 이름이 붙은 것들이 컬럼 자료형으로 사용할 수 있는 것들이다.
+
+Model에 대한 App에서 DB 정보
+- python manage.py makemigratinos [앱이름]
+
+DB에 모델을 적용
+- python mangae.py migrate [앱이름]
+
+admin 페이지에 등록
+- admin.py에서 admin.site.register(모델이름)
+- 모델이름은 각 App의 models의 클래스 이름이다.
+- 여러 이름을 보고 싶을 때는 클래스를 생성하고 list_display(컬럼명1, 컬럼명2, ....)을 넣는다. 그리고 admin.site.register(모델이름, list_display의 클래스이름)
+
+urls 에서 re_path 할 때 주의점
+- urls는 url이 등록된 순으로 읽어서 처리한다.
+- 비슷한 이름으로 re_path를 사용할 때 적용되는 내용을 확인해야 한다.

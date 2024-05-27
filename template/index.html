@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+</head>
+<body>
+    <!--
+        index.html, index.htm, index.jsp, index.php
+        메인 페이지의 페이지이름
+    -->
+    {% load static %}
+    <img src="{% static 'daum.jpg' %}" width="100px" height="100px">
+    <img src="{% static 'image/naver.png' %}" width="100px" height="100px">
+    <img src="{% static 'img/naver.png' %}" width="100px" height="100px">
+    메인 index 페이지 입니다.<br>
+    {{ user }}<br>
+    {{ user.is_active }}
+    <hr>
+    <!-- {% if user.is_active %}
+        {{ user }}님 환영합니다
+        <a href="{% url 'logout' %}"><input type="button" value="로그인 아웃"></a>
+    {% else %}
+        <a href="{% url 'login' %}"><input type="button" value="로그인"></a>
+    {% endif %} -->
+
+    {% if user.is_authenticated %}
+        {{ user }}님 환영합니다.
+        <button><a href='{% url "logout" %}'>로그아웃</a></button>
+        <a href="{% url 'PB:I' %}"><button>목록 보기</button></a>
+        <button><a href="{% url 'myinfo' %}">내정보</a></button>
+    {% else %}
+        <button><a href="{% url 'login' %}">로그인</a></button>
+        <button><a href="{% url 'create' %}">계정등록</a></button>
+    {% endif %}
+</body>
+</html>

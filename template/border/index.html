@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+{% block title %}게시판{% endblock %}
+{% block content %}
+    <h3 class="text-center">게시판</h3>
+    <div style="height: 200px;">
+        <table class="table table-bordered border-primary text-center" style="width:70%" align="center">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>댓글수</th>
+                <th>좋아요</th>
+                <th>싫어요</th>
+            </tr>
+            {% for value in border %}
+            <tr>
+                <td>{{value.id}}</td>
+                <!-- /border/ : BD - app_name -->
+                <!-- D : detail -->
+                <!-- <td><a href="/border/{{value.id}}" style="text-decoration: none;">{{value.제목}}</a></td> -->
+                <td><a href="{% url 'BD:D' value.id %}" style="text-decoration: none;">{{value.제목}}</a></td>
+                <td>{{value.작성자}}</td>
+                <td>{{value.조회수}}</td>
+                <td>{{value.댓글수}}</td>
+                <td>{{value.좋아요}}</td>
+                <td>{{value.싫어요}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <ul class="pagination d-flex justify-content-center">
+        {% if border.has_previous %}
+            <li class="page-item"><a href="/border/page/{{border.previous_page_number}}/" class="page-link"><<</a></li>
+            <li class="page-item"><a href="/border/page/{{border.previous_page_number}}/" class="page-link">Previous</a></li>
+        {% else %}
+            <li class="page-item disabled"><a href="" class="page-link"><<</a></li>
+            <li class="page-item disabled"><a href="" class="page-link">Previous</a></li>
+        {% endif %}
+        {% for i in page_num %}
+            {% if border.number == i %}
+                <li class="page-item active"><a href="/border/page/{{i}}/" class="page-link">{{i}}</a></li>
+            {% else %}
+                <li class="page-item"><a href="/border/page/{{i}}/" class="page-link">{{i}}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if border.has_next %}
+            <li class="page-item"><a href="/border/page/{{border.next_page_number}}/" class="page-link">Next</a></li>
+            <li class="page-item"><a href="/border/page/{{border.next_page_number}}/" class="page-link">>></a></li>
+        {% else %}
+            <li class="page-item disabled"><a href="" class="page-link">Next</a></li>
+            <li class="page-item disabled"><a href="" class="page-link">>></a></li>
+        {% endif %}
+    </ul>
+    <div class="d-flex justify-content-center">
+        <!-- {% if border.has_previous %}
+            <button type="button" class="btn btn-info btn-lg mx-2" onclick="document.location.href='/border/page/{{border.previous_page_number}}'">이전</button>
+        {% endif %}
+        <div class="align-middle align-items-center" style="margin: auto 0;">{{border.number}} / {{border.paginator.num_pages}} </div>
+        {% if border.has_next %}
+            <button type="button" class="btn btn-info btn-lg mx-2" onclick="document.location.href='/border/page/{{border.next_page_number}}'">다음</button>
+        {% endif %} -->
+        {% if user.is_active %}
+            <button type="button" class="btn btn-success btn-lg mx-2" onclick="document.location.href='/border/add/'">글쓰기</button>
+        {% endif %}
+    </div>
+{% endblock %}

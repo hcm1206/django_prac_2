@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}상세 페이지{% endblock %}
+{% block content %}
+    <h3 class="text-center mb-3">게시판 상세 페이지</h3>
+    <table class="text-center table table-bordered border-primary w-50" align="center">
+        <tr>
+            <th>제목</th>
+            <td>{{border.제목}}</td>
+        </tr>
+        <tr>
+            <th>수정일</th>
+            <td>{{border.수정일}}</td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td><textarea class="form-control" style="resize:none" rows="10" disabled>{{border.내용}}</textarea></td>
+        </tr>
+        <tr>
+            <th class="align-middle">파일</th>
+            <td>
+                <ul class="list-group">
+                    {% for x in dirList %}
+                        <li class="list-group-item"><a href='/updown/download/{{border.id}}/{{x}}'>{{ x }}</a></li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button onclick="location.href='/border/good/{{border.id}}/';"><img src='{%static "good.png" %}' width="30px"><br>{{border.좋아요}}</button>
+                <button onclick="location.href='/border/hate/{{border.id}}/';"><img src='{%static "hate.png" %}' width="30px"><br>{{border.싫어요}}</button>
+            </td>
+        </tr>
+    </table>
+    <table class="table w-50" align="center">
+        {% for i in reply %}
+            <tr>
+                <td width="30%">{{i.작성일 | date:'Y-m-d'}}</td>
+                <td width="40%">{{i.내용}}</td>
+                <td width="10%">{{i.작성자}}</td>
+                <td style="float:right;">
+                    {% if i.작성자 == user.username %}
+                    <a href="/border/delreply/{{border.id}}/{{i.id}}" style="text-decoration: none;"><button class="btn btn-danger btn-sm">삭제</button></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="text-center" width="50%">
+        <form action="/border/addreply/{{border.id}}/">
+            <legend>
+                <span style="width:10%; display:inline-block">댓글</span> <input type="text" name="reply" class="form-control" style="width:30%; display:inline-block">
+                <input type="submit" value="등록" class="btn btn-success" style="margin-left: 10px; margin-top: 0;">
+            </legend>
+        </form>
+    </div>
+    {% if user.username == border.작성자 %}
+    <div class="d-flex justify-content-center" style="clear:both">
+        <!-- <button type="button" class="btn btn-success btn-lg mx-2" onclick="document.location.href='update/'">수정</button>
+        <button type="button" class="btn btn-danger btn-lg mx-2" onclick="document.location.href='delete/'">삭제</button> -->
+        <!-- <button type="button" class="btn btn-success btn-lg mx-2" onclick="document.location.href='{% url "BD:U" border.id %}'">수정</button>
+        <button type="button" class="btn btn-danger btn-lg mx-2" onclick="document.location.href='{% url "BD:L" border.id %}'">삭제</button> -->
+        <button type="button" class="btn btn-success btn-lg mx-2" onclick="document.location.href='/border/{{border.id}}/update'">수정</button>
+        <button type="button" class="btn btn-danger btn-lg mx-2" onclick="document.location.href='/border/{{border.id}}/delete'">삭제</button>
+    </div>
+    {% endif %}
+{% endblock %}

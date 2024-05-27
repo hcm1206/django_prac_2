@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block title %}글쓰기 창{% endblock %}
+{% block content %}
+    <h3 class="text-center mb-3">글쓰기창</h3>
+    <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+        <table class="text-center table table-bordered border-primary" align="center" style="width: 50%;">
+            <tr>
+                <th class="align-middle">제목</th>
+                <td><input type="text" name="title" class="form-control"></td>
+            </tr>
+            <tr>
+                <th class="align-middle">내용</th>
+                <td><textarea name="context" class="form-control" rows="10" style="resize:none;"></textarea></td>
+            </tr>
+            <tr>
+                <th class="align-middle">파일첨부</th>
+                <td><input type="file" name="files" multiple></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" class="btn btn-success btn-lg" value="저장" style="width: 120px;">
+                    <input type="reset" class="btn btn-danger btn-lg" value="다시시작" style="width: 120px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

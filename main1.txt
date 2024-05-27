@@ -1,0 +1,82 @@
+원하는 폴더 생성 후 그 폴더 위치에서 실행
+
+프로젝트
+django-admin startproject [프로젝트명]
+
+------------------------------
+cd 프로젝트명
+또는
+VS code 로 프로젝트 폴더를 열기
+터미널 -> 새 터미널 열기
+------------------------------
+# DB 초기 설정
+python manage.py migrate
+
+# 관리자 계정 설정
+python manage.py createsuperuser
+- 계정명, 비밀번호 마음대로 지정
+- admin, root, administrator 이라는 계정명은 피하는게 좋다.
+
+# 서버 실행
+python manage.py runserver
+
+# subapp 생성
+python manage.py startapp [앱이름]
+
+# subapp 등록
+settings.py 34번 라인에 INSTALLED_APP의 list에 앱 이름을 문자열로 추가
+
+# html 폴더 - template 등록
+settings.py 59번 라인에 TEMPLATE 안에 DIRS 에 list에 경로추가
+import os
+DIRS : [os.path.join(BASE_DIR, '폴더명')]
+
+# 웹 한글화
+settings.py 108번 라인
+LANGUAGE_CODE = 'ko-kr'
+
+# 한국 시간
+settings.py 110번 라인
+TIME_ZONE = 'Asia/Seoul'
+
+# subapp DB 등록
+subapp.models.py에 class로 등록
+클래스 이름이 모델 이름이 된다
+class [클래스이름](models.Model):
+    column_name = models.[column_type](option=value)
+column_type
+- CharField() : 문자열
+- EmailField() : 이메일형식
+- DateField() : 날짜형식
+
+option
+- null=False : 값이 반드시 입력
+- null=True 또는 생략 : 값이 반드시 입력되지 않아도 됨
+- max_length : 숫자만큼의 길이를 가짐
+
+# subapp 모델 생성
+manage.py가 있는 폴더에서 실행
+python manage.py makemigrations [앱 이름] : 특정 앱만 실행
+python manage.py makemigrations : 전체 앱 실행
+
+# subapp DB 생성
+python manage.py migrate [앱 이름] : 특정 앱만 실행
+python manage.py migrate : 전체 앱 실행
+
+# 관리자 페이지에 생성한 DB 보기
+admin.py 에서 실행
+from 앱폴더.models import 모델
+class 모델이름 Admin(admin.ModelAdmin):
+list_display = ('컬럼명1', '컬럼명2')
+admin.site.register(모델이름, 모델이름Admin)
+
+# DB에서 모델로 데이터 가져오기
+from 앱폴더.models import 모델
+
+- 해당하는 컬럼의 값들만 가지고 온다.
+모델.objects.values('컬럼명1', '컬럼명2')
+- 해당하는 컬럼의 값을 가진 데이터 전체를 가지고 온다.
+모델.objects.get(컬럼명=값)
+
+# html에 Template Tag 사용
+<a href = "{{값}}">{{값}}</a>
